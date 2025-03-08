@@ -36,6 +36,7 @@
     + [Search Indexing](#search-indexing)
   * [Run](#run)
   * [Building the OAS file](#building-the-oas-file)
+  * [Generating Manifest Data](#generating-manifest-data)
 - [Contributing](#contributing)
   * [Editing existing sources](#editing-existing-sources)
   * [Adding a new source](#adding-a-new-source)
@@ -116,6 +117,16 @@ After completing a build, you can generate an OAS file to be used by another app
 ```bash
 pipenv run python manage.py spectacular --color --file openapi-schema.yml` to build the OAS file.
 ```
+
+## Generating Manifest Data
+
+The `/v1/manifest/` endpoint provides MD5 hashes of all data files, which allows client applications to check if their data is outdated. To populate the manifest database:
+
+```bash
+pipenv run python manage.py generate_manifest
+```
+
+This will scan all JSON files in the data directories and create manifest entries with their MD5 hashes. The manifest endpoint can then be used by client applications to determine if they need to update their local data.
 
 # Contributing
 See [contribution guide](CONTRIBUTING.md).

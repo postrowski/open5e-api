@@ -57,6 +57,10 @@ class Command(BaseCommand):
                 build_v1v2_searchindex()
         else:
             self.stdout.write('Skipping v2 index build because of --noindex.')
+            
+        # Generate manifest entries regardless of index option
+        self.stdout.write('Generating manifest entries...')
+        generate_manifests()
 
         self.stdout.write(self.style.SUCCESS('API setup complete.'))
 
@@ -95,3 +99,8 @@ def build_v1v2_searchindex() -> None:
     """Builds the custom search index defined in the api_v2 management
     commands. Only adds the v1 data."""
     call_command('buildindex','--v1','--v2')
+
+
+def generate_manifests() -> None:
+    """Generate manifest entries with hash codes for all data files."""
+    call_command('generate_manifest')
